@@ -40,10 +40,12 @@ def user(name=''):
     1) retrieve a certain number of recent tweets
     2) save those tweets to the db and their sentiment
     3) retrieve a certain number of recent tweets from db.
+    3)
     :param name:
     :return:
     """
     print(name)
+    # Retrieve tweets
     url = create_url()
     try:
         global tweets
@@ -51,7 +53,13 @@ def user(name=''):
         tweets = connect_to_endpoint(url)
     except Exception as err:
         print(f"Error retrieving tweets: {err}")
+
+    # Save to db:
+    # for tweet in tweets:
+    #     insert("")
+    # TODO: retrieve again
     print('Num tweets:', len(tweets))
+
     return render_template("index.html", content=tweets)#data)
 
 @app.route("/aboutUs.html")
