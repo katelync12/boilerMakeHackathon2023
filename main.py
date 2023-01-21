@@ -1,3 +1,8 @@
+import sqlite3
+from typing import Dict, List
+db_file = 'tweets.db'
+e = "Couldn't connect to db."
+
 from flask import Flask, redirect, url_for, render_template
 from sampledstream import create_url, connect_to_endpoint
 from dotenv import load_dotenv
@@ -50,7 +55,7 @@ def user(name=''):
     url = create_url()
     try:
         global tweets
-        tweets = []
+        tweets = [] #: List[Dict[str,str]]
         tweets = connect_to_endpoint(url)
     except Exception as err:
         print(f"Error retrieving tweets: {err}")
@@ -58,6 +63,20 @@ def user(name=''):
     # Save to db:
     # for tweet in tweets:
     #     insert("")
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+    except:
+        print(e)
+
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE tweets(id, text)")
+    for tweet in tweets:
+        # tweet is the form {"id":"12312", "text":"Hello!"} tweet["id"] tweet["text"]
+        cur.execute("""
+        INSERT INTO tweets VALUES
+            (?, ?)
+        """, [tweet["id"], tweet["text"]])
 
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
