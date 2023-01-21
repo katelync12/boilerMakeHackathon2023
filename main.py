@@ -3,9 +3,38 @@ from flask import Flask, redirect, url_for, render_template
 app = Flask(__name__, static_folder="css")
 
 
+data = [
+    {
+        'rank':'1',
+        'username': '@Donuts',
+        'cancels': '7736'
+    },
+    {
+        'rank':'2',
+        'username': '@TreasureChest',
+        'cancels': '6032'
+    },
+    {
+        'rank':'3',
+        'username': '@JimmyJohns',
+        'cancels': '5132'
+    },
+    {
+        'rank':'4',
+        'username': '@Duolingo',
+        'cancels': '4211'
+    },
+    {
+        'rank':'5',
+        'username': '@SlimJim',
+        'cancels': '5131'
+    }
+]
+
+
 @app.route("/<name>")
 def user(name):
-    return render_template("index.html", content=["joe", "bob"])
+    return render_template("index.html", content=data)
 
 
 
