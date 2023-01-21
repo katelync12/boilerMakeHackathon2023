@@ -71,7 +71,7 @@ def user(name=''):
         print(e)
 
     cur = conn.cursor()
-    cur.execute("CREATE TABLE tweets(id, text)")
+    # cur.execute("CREATE TABLE tweets(id, text)")
     for tweet in tweets:
         # tweet is the form {"id":"12312", "text":"Hello!"} tweet["id"] tweet["text"]
         cur.execute("""
