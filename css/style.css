@@ -1,0 +1,50 @@
+/* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: #03001C;
+  padding: 15px 10px;
+}
+
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+a:link {
+  color: white;
+}
+
+/* Creates the header background */
+.color {
+  background-color: #03001C;
+  height: 700px;
+}
+
+/* Style the header links */
+.active {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+/* Change the text color on mouse-over */
+.header a:hover {
+  color: #d7c3f3;
+}
+
+/* Changes the background color */
+.background {
+  background-color: #301E67;
+}
+
+/* Bolds the title */
+.logo {
+  font-size: 23px;
+  font-weight: 600;
+}
