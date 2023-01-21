@@ -88,7 +88,25 @@ def user(name=''):
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
     conn.close()
-    return render_template("index.html", content=tweets)#data)
+
+    username = "taylorswift13"
+
+    if "@" in tweets[0]['text']:
+        tweetList = tweets[0]['text'].split()
+        for word in tweetList:
+            if word.startswith("@"):
+                username = word
+                username = username.replace("@", "")
+                username = username.replace(":", "")
+                username = username.replace("-", "")
+                break
+
+    image_url = get_users_with_bearer_token.create_url(username)
+    get_image = get_users_with_bearer_token.connect_to_endpoint(image_url)
+    # image = json.dumps(get_image, indent=4, sort_keys=True)
+    image = get_image['data'][0]['profile_image_url']
+
+    return render_template("index.html", content=tweets, image=image, username=username)#data)
 
     username = "taylorswift13"
 
