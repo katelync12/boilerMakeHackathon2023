@@ -32,17 +32,10 @@ data = [
     }
 ]
 
+# @app.route("/<name>")
+
 @app.route("/")
-@app.route("/<name>")
 def user(name=''):
-    """
-    Workflow:
-    1) retrieve a certain number of recent tweets
-    2) save those tweets to the db and their sentiment
-    3) retrieve a certain number of recent tweets from db.
-    :param name:
-    :return:
-    """
     print(name)
     url = create_url()
     try:
@@ -54,10 +47,17 @@ def user(name=''):
     print('Num tweets:', len(tweets))
     return render_template("index.html", content=tweets)#data)
 
-@app.route("/aboutUs.html")
-def home():
+@app.route("/aboutUs")
+def about():
     return render_template("aboutUs.html")
 
+
+# When the route (url) is the same as an html file in the templates folder, 
+# flask gives a 404. Maybe because it thinks we're trying to read the html file
+# directly?
+@app.route("/x.html")
+def x():
+    return render_template("index.html", content=[])
 
 
 if __name__ == "__main__":
