@@ -88,7 +88,6 @@ def user(name=''):
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
     conn.close()
-    return render_template("index.html", content=tweets)#data)
 
     username = "taylorswift13"
 
