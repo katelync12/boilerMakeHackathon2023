@@ -46,6 +46,7 @@ def user(name=''):
     :return:
     """
     print(name)
+
     # Retrieve tweets
     url = create_url()
     try:

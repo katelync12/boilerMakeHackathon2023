@@ -52,7 +52,7 @@ def delete_all_rules(rules):
 def set_rules(delete):
     # You can adjust the rules if needed
     rules = [
-        {"value": "lang:en", "tag": "only english tweets"},
+        {"value": "cancel lang:en", "tag": "only english tweets about cancellation"},
         # {"value": "cat has:images -grumpy", "tag": "cat pictures"},
     ]
     payload = {"add": rules}
