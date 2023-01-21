@@ -85,6 +85,10 @@ table, th, td {
   color: white;
 }
 
+.header a.active-page  {
+  background-color:#19106c;
+}
+
 /*
 th:first-of-type {
   border-top-left-radius: 10px;
