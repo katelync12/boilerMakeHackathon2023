@@ -79,9 +79,11 @@ def user(name=''):
             (?, ?)
         """, [tweet["id"], tweet["text"]])
 
+    conn.commit()
+
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
-
+    conn.close()
     return render_template("index.html", content=tweets)#data)
 
 @app.route("/aboutUs")
