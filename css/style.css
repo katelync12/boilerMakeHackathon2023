@@ -55,6 +55,7 @@ table, th, td {
 }
 
 .dataTable {
+  margin-top: 30px;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
@@ -89,17 +90,9 @@ table, th, td {
   background-color:#19106c;
 }
 
-/*
-th:first-of-type {
-  border-top-left-radius: 10px;
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
-th:last-of-type {
-  border-top-right-radius: 10px;
-}
-tr:last-of-type td:first-of-type {
-  border-bottom-left-radius: 10px;
-}
-tr:last-of-type td:last-of-type {
-  border-bottom-right-radius: 10px;
-}
-*/

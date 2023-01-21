@@ -32,8 +32,9 @@ data = [
     }
 ]
 
+# @app.route("/<name>")
+
 @app.route("/")
-@app.route("/<name>")
 def user(name=''):
     """
     Workflow:
@@ -57,15 +58,15 @@ def user(name=''):
     # Save to db:
     # for tweet in tweets:
     #     insert("")
+
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
 
     return render_template("index.html", content=tweets)#data)
 
-@app.route("/aboutUs.html")
-def home():
+@app.route("/aboutUs")
+def about():
     return render_template("aboutUs.html")
-
 
 
 if __name__ == "__main__":
