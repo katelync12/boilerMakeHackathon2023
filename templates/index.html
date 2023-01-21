@@ -31,13 +31,13 @@
     <tr>
       <th>Rank</th>
       <th>Username</th>
-      <th># of Cancels</th>
+{#      <th># of Cancels</th>#}
     </tr>
     {% for item in content %}
     <tr>
-      <td>{{item.rank}}</td>
-      <td>{{item.username}}</td>
-      <td>{{item.cancels}}</td>
+      <td>{{item['id']}}</td>
+      <td>{{item['text']}}</td>
+{#      <td>{{item}}</td>#}
     </tr>
     {% endfor %}
   </table>

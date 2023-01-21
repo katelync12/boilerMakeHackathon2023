@@ -23,7 +23,7 @@ def bearer_oauth(r):
 
 def connect_to_endpoint(url):
     response = requests.request("GET", url, auth=bearer_oauth, stream=True)
-    print(response.status_code)
+    print('Tweet endpoint status:',response.status_code)
     if response.status_code != 200:
         return []
         # raise Exception(
@@ -40,7 +40,7 @@ def connect_to_endpoint(url):
             return tweets
         if response_line:
             json_response = json.loads(response_line)
-            tweets.append(json_response)
+            tweets.append(json_response.get('data', {}))
             # if (json_response[])
             print(json.dumps(json_response, indent=4, sort_keys=True))
 

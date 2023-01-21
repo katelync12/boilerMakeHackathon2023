@@ -39,10 +39,11 @@ def user(name=''):
     url = create_url()
     try:
         global tweets
+        tweets = []
         tweets = connect_to_endpoint(url)
     except Exception as err:
         print(f"Error retrieving tweets: {err}")
-
+    print('Num tweets:', len(tweets))
     return render_template("index.html", content=tweets)#data)
 
 @app.route("/aboutUs.html")
