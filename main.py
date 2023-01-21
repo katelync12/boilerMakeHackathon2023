@@ -35,6 +35,14 @@ data = [
 @app.route("/")
 @app.route("/<name>")
 def user(name=''):
+    """
+    Workflow:
+    1) retrieve a certain number of recent tweets
+    2) save those tweets to the db and their sentiment
+    3) retrieve a certain number of recent tweets from db.
+    :param name:
+    :return:
+    """
     print(name)
     url = create_url()
     try:
