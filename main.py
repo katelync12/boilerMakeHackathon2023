@@ -36,6 +36,10 @@ data = [
 def user(name):
     return render_template("index.html", content=data)
 
+@app.route("/aboutUs.html")
+def home():
+    return render_template("aboutUs.html")
+
 
 
 if __name__ == "__main__":
