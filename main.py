@@ -1,7 +1,8 @@
 from flask import Flask, redirect, url_for, render_template
+from sampledstream import create_url, connect_to_endpoint
+from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder="css")
-
 
 data = [
     {
@@ -31,12 +32,23 @@ data = [
     }
 ]
 
-
+@app.route("/")
 @app.route("/<name>")
-def user(name):
-    return render_template("index.html", content=data)
+def user(name=''):
+    print(name)
+    url = create_url()
+    try:
+        global tweets
+        tweets = connect_to_endpoint(url)
+    except Exception as err:
+        print(f"Error retrieving tweets: {err}")
+
+    return render_template("index.html", content=tweets)#data)
 
 
 
 if __name__ == "__main__":
+    load_dotenv()
+
+
     app.run(debug=True)
