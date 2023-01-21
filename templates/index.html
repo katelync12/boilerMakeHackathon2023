@@ -26,7 +26,19 @@
     </div>
   </div>
 
-    <h1>Home Page</h1>  
-    <p>{{content}}</p>
+  <table class="dataTable">
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th># of Cancels</th>
+    </tr>
+    {% for item in content %}
+    <tr>
+      <td>{{item.rank}}</td>
+      <td>{{item.username}}</td>
+      <td>{{item.cancels}}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
