@@ -3,6 +3,11 @@ from sampledstream import create_url, connect_to_endpoint
 from dotenv import load_dotenv
 import get_users_with_bearer_token
 import json
+import sqlite3
+from typing import Dict, List
+db_file = 'tweets.db'
+e = "Couldn't connect to db."
+
 
 app = Flask(__name__, static_folder="css")
 
@@ -54,7 +59,7 @@ def user(name=''):
     url = create_url()
     try:
         global tweets
-        tweets = []
+        tweets = [] #: List[Dict[str,str]]
         tweets = connect_to_endpoint(url)
     except Exception as err:
         print(f"Error retrieving tweets: {err}")
@@ -63,8 +68,27 @@ def user(name=''):
     # for tweet in tweets:
     #     insert("")
 
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+    except:
+        print(e)
+
+    cur = conn.cursor()
+    # cur.execute("CREATE TABLE tweets(id, text)")
+    for tweet in tweets:
+        # tweet is the form {"id":"12312", "text":"Hello!"} tweet["id"] tweet["text"]
+        cur.execute("""
+        INSERT INTO tweets VALUES
+            (?, ?)
+        """, [tweet["id"], tweet["text"]])
+
+    conn.commit()
+
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
+    conn.close()
+    return render_template("index.html", content=tweets)#data)
 
     username = "taylorswift13"
 
