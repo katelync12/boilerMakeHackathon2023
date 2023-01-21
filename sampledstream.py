@@ -22,27 +22,34 @@ def bearer_oauth(r):
 
 
 def connect_to_endpoint(url):
-    response = requests.request("GET", url, auth=bearer_oauth, stream=True)
-    print('Tweet endpoint status:',response.status_code)
-    if response.status_code != 200:
-        return []
-        # raise Exception(
-        #     "Request returned an error: {} {}".format(
-        #         response.status_code, response.text
-        #     )
-        # )
-    # for response_line in response.iter_lines():
+    # response = requests.request("GET", url, auth=bearer_oauth, stream=True)
+    print('running connect')
     tweets = []
-    for i in range(5):
-        try:
-            response_line = next(response.iter_lines())
-        except:
-            return tweets
-        if response_line:
-            json_response = json.loads(response_line)
-            tweets.append(json_response.get('data', {}))
-            # if (json_response[])
-            print(json.dumps(json_response, indent=4, sort_keys=True))
+    with requests.request("GET", url, auth=bearer_oauth, stream=True) as response:
+        print('Tweet endpoint status:',response.status_code)
+        if response.status_code != 200:
+            print("Request returned an error: {} {}".format(
+                    response.status_code, response.text
+                ))
+            # raise Exception(
+            #     "Request returned an error: {} {}".format(
+            #         response.status_code, response.text
+            #     )
+            # )
+        # for response_line in response.iter_lines():
+        else:
+            for i in range(5):
+                try:
+                    response_line = next(response.iter_lines())
+                except:
+                    break
+                if response_line:
+                    json_response = json.loads(response_line)
+                    tweets.append(json_response.get('data', {}))
+                    # if (json_response[])
+                    print(json.dumps(json_response, indent=4, sort_keys=True))
+    print("Closed stream")
+    return tweets
 
 
 
