@@ -1,10 +1,14 @@
 import re
+import sqlite3
 from typing import List, Dict, Tuple
 import trending
 import name_check
 import recent_tweets
 import sentiment
 import process_tweet
+e = "Couldn't connect to db."
+db_file = 'tweets.db'
+
 
 
 def get_tweets() -> List[Tuple[str, float, List[str]]]:
@@ -48,6 +52,37 @@ def get_tweets() -> List[Tuple[str, float, List[str]]]:
 
 def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
     """Write all_tweets to the db"""
+    try:
+        conn = sqlite3.connect(db_file)
+    except:
+        print(e)
+
+    cur = conn.cursor()
+    
+    cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
+
+    for trendTweet in all_tweets:
+        # tweet is the form [("name", sas, ["@tags"]), ("name", sas, ["@tags"]), "name", sas, ["@tags"]]
+        res = cur.execute("""
+            SELECT name FROM trending WHERE name==?
+            """, [trendTweet[0]])
+    
+    # print(trendTweet)
+        res1 = res.fetchall()
+    # print(res1)
+        if len(res1)==0:
+            cur.execute("""INSERT INTO trending VALUES
+                (?, 1, ?, ?);
+            """, [trendTweet[0], trendTweet[1], str("".join(trendTweet[2]))])
+        else:
+            cur.execute("""UPDATE trending
+            SET count = count + 1, sas = sas + ?, handles = (handles || ?)
+            WHERE name==?;
+            """, [trendTweet[1], str("".join(trendTweet[2])), trendTweet[0]])
+        conn.commit()
+        
+    cur.close()
+    conn.close()
 
 if __name__ == "__main__":
     tweet_list = get_tweets()
