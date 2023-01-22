@@ -24,7 +24,8 @@ Backend:
 - SQLite
 - Twitter Developer API
 - Web Scraping/Selenium
+- crontab
 
-Basically, this program uses a Twitter API and webscraping using Selenium to determine the most cancelled users at any given time! Data is stored using SQLite and sentiment analysis is performed on trending tweets to determine which users are most cancelled. Using SpaCy's Named Entity Recognition capabilities, we also made sure to weed out only people who are being cancelled using, as opposed to companies, etc. This data is then passed along to the frontend, which relies mainly on Flask. The frontend is also written with HTML, CSS, and the Bootstrap framework. 
+Basically, this program uses a Twitter API and webscraping using Selenium to determine the most cancelled users at any given time! Data is stored using SQLite and sentiment analysis is performed on trending tweets to determine which users are most cancelled. Using SpaCy's Named Entity Recognition capabilities, we also made sure to weed out only people who are being cancelled using, as opposed to companies, etc. This data is then passed along to the frontend, which relies mainly on Flask. The frontend is also written with HTML, CSS, and the Bootstrap framework. We used crontab to update the database in the background.
 
 Running on http://pod2-3.cs.purdue.edu:5000/random and 0 hours of sleep.
