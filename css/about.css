@@ -21,12 +21,6 @@
     color: white;
   }
 
-/* Bolds the title */
-.logo {
-    font-size: 23px;
-    font-weight: 600;
-  }
-
   #active-page {
     background-color:#19106c;
   }
@@ -98,13 +92,18 @@ body {
     margin-top: 20px;
     padding: 20px;
 }
+
+/* Bolds the title */
+.logo {
+  font-size: 23px;
+  font-weight: 600;
+}
 /*
 .about-item:hover i,
 .about-item:hover h3,
 .about-item:hover p{
     color:#fff;
 }
-
 .about-item:hover hr{
     background-color: #fff;
 }
