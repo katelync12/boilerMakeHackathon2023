@@ -10,3 +10,6 @@ This program uses a Twitter API and webscraping to determine the most cancelled 
 - Python 3.10
 - SQL
 - Flask 2.2
+
+
+Running on pod2-3
