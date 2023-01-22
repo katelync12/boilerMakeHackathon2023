@@ -71,6 +71,7 @@ def user(name=''):
         print(e)
 
     cur = conn.cursor()
+    
     # cur.execute("CREATE TABLE tweets(id, text)")
     for tweet in tweets:
         # tweet is the form {"id":"12312", "text":"Hello!"} tweet["id"] tweet["text"]
@@ -80,11 +81,13 @@ def user(name=''):
         """, [tweet["id"], tweet["text"]])
 
     conn.commit()
+    retrieve = cur.execute("SELECT id, text FROM tweets")
+    retrieveList = retrieve.fetchall()
 
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
     conn.close()
-    return render_template("index.html", content=tweets)#data)
+    return render_template("index.html", content=retrieveList)#data)
 
 @app.route("/aboutUs")
 def about():
