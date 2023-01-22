@@ -10,14 +10,15 @@ import re
 from selenium.webdriver.chrome.options import Options
 
 
-def get_source_with_webdriver() -> str:
+def get_source_with_webdriver(headless=False) -> str:
     #TODO: decide if headless is necessary
     chrome_options = Options()
     # chrome_options.add_argument("--disable-extensions")
     # chrome_options.add_argument("--disable-gpu")
     # chrome_options.add_argument("--no-sandbox") # linux only
-    chrome_options.add_argument("--headless")
-    # chrome_options.headless = True # also works
+    if headless:
+        chrome_options.add_argument("--headless")
+        # chrome_options.headless = True # also works
     browser = webdriver.Chrome(options=chrome_options)
 
     browser.get('https://www.twitter.com/explore/tabs/trending')

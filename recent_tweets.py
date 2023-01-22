@@ -1,10 +1,15 @@
 import requests
 import os
+from dotenv import load_dotenv
 import json
 
-# To set your environment variables in your terminal run the following line:
-# export 'BEARER_TOKEN'='<your_bearer_token>'
-bearer_token = os.environ.get("BEARER_TOKEN")
+
+def setup():
+    load_dotenv()
+    # To set your environment variables in your terminal run the following line:
+    # export 'BEARER_TOKEN'='<your_bearer_token>'
+    global bearer_token
+    bearer_token = os.environ.get("BEARER_TOKEN")
 
 
 
@@ -12,6 +17,7 @@ def bearer_oauth(r):
     """
     Method required by bearer token authentication.
     """
+    setup()
 
     r.headers["Authorization"] = f"Bearer {bearer_token}"
     r.headers["User-Agent"] = "v2RecentSearchPython"
@@ -25,7 +31,6 @@ def connect_to_endpoint(url, params):
     return response.json()
 
 
-
 def search(name: str, count:int =10):
     search_url = "https://api.twitter.com/2/tweets/search/recent"
 
@@ -36,10 +41,12 @@ def search(name: str, count:int =10):
     json_response = connect_to_endpoint(search_url, query_params)
     return json_response['data']
 
+
 def main():
     print(search('Kanye',13))
     # json_response = connect_to_endpoint(search_url, query_params)
     # print(json.dumps(json_response, indent=4, sort_keys=True))
+
 
 if __name__ == "__main__":
     main()
