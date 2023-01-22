@@ -86,10 +86,6 @@ table, th, td {
   color: white;
 }
 
-.header a.active-page  {
-  background-color:#19106c;
-}
-
 .center {
   display: block;
   margin-left: auto;
@@ -109,4 +105,8 @@ table, th, td {
 
 .subHeading:hover {
   color: rgb(217, 208, 255);
+}
+
+#active-page {
+  background-color:#19106c;
 }
