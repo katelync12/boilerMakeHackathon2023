@@ -1,11 +1,13 @@
+from flask import Flask, redirect, url_for, render_template
+from sampledstream import create_url, connect_to_endpoint
+from dotenv import load_dotenv
+import get_users_with_bearer_token
+import json
 import sqlite3
 from typing import Dict, List
 db_file = 'tweets.db'
 e = "Couldn't connect to db."
 
-from flask import Flask, redirect, url_for, render_template
-from sampledstream import create_url, connect_to_endpoint
-from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder="css")
 
@@ -50,6 +52,7 @@ def user(name=''):
     :param name:
     :return:
     """
+    
     print(name)
 
     # Retrieve tweets
@@ -64,6 +67,7 @@ def user(name=''):
     # Save to db:
     # for tweet in tweets:
     #     insert("")
+
     try:
         conn = sqlite3.connect(db_file)
         print(sqlite3.version)
@@ -87,7 +91,33 @@ def user(name=''):
     # TODO: retrieve again
     print('Num tweets:', len(tweets))
     conn.close()
-    return render_template("index.html", content=retrieveList)#data)
+
+    username = "taylorswift13"
+
+    if "@" in tweets[0]['text']:
+        tweetList = tweets[0]['text'].split()
+        for word in tweetList:
+            if word.startswith("@"):
+                username = word
+                username = username.replace("@", "")
+                username = username.replace(":", "")
+                username = username.replace("-", "")
+                break
+
+    image_url = get_users_with_bearer_token.create_url(username)
+    get_image = get_users_with_bearer_token.connect_to_endpoint(image_url)
+    # image = json.dumps(get_image, indent=4, sort_keys=True)
+    image = get_image['data'][0]['profile_image_url']
+
+    return render_template("index.html", content=retrieveList, image=image, username=username)#data)
+# <<<<<<< HEAD
+#     # return render_template("index.html", content=)#data)
+# =======
+
+    
+
+    
+# >>>>>>> 0ad08a75fbe18f41ed0387431910dc6eeddc1ba2
 
 @app.route("/aboutUs")
 def about():
