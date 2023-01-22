@@ -91,24 +91,24 @@ def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
                 """, [trendTweet[1], str("".join(trendTweet[2])), trendTweet[0]])
             conn.commit()
         
-        res = cur.execute("""
-                SELECT name, count, sas, handles FROM trending
-                """)
-        res1 = res.fetchall()
-
-        rankTable = []
-        for i in range(len(res1)):
-            print("res1: ", res1[i])  
-            sublist = list()
-            sublist.append(res1[i][0]) #name
-            ats = filter(None, res1[i][3].split('@'))
-            counter = Counter(ats) #hash map for hashtags
-            print("counter", counter)
-            sublist.append('@'+counter.most_common(1)[0][0]) #most common hashtag
-            print(counter.most_common(1))
-            sublist.append(res1[i][2]/res1[i][1])
-            rankTable.append(sublist)
-        rankTable = sorted(rankTable, key=lambda x: x[2], reverse=True)
+        # res = cur.execute("""
+        #         SELECT name, count, sas, handles FROM trending
+        #         """)
+        # res1 = res.fetchall()
+        #
+        # rankTable = []
+        # for i in range(len(res1)):
+        #     print("res1: ", res1[i])
+        #     sublist = list()
+        #     sublist.append(res1[i][0]) #name
+        #     ats = filter(None, res1[i][3].split('@'))
+        #     counter = Counter(ats) #hash map for hashtags
+        #     print("counter", counter)
+        #     sublist.append('@'+counter.most_common(1)[0][0]) #most common hashtag
+        #     print(counter.most_common(1))
+        #     sublist.append(res1[i][2]/res1[i][1])
+        #     rankTable.append(sublist)
+        # rankTable = sorted(rankTable, key=lambda x: x[2], reverse=True)
     
     finally:
         cur.close()
