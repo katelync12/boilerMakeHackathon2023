@@ -111,14 +111,7 @@ def user(name=''):
     image = get_image['data'][0]['profile_image_url']
 
     return render_template("index.html", content=retrieveList, image=image, username=username)#data)
-# <<<<<<< HEAD
-#     # return render_template("index.html", content=)#data)
-# =======
 
-    
-
-    
-# >>>>>>> 0ad08a75fbe18f41ed0387431910dc6eeddc1ba2
 
 @app.route("/aboutUs")
 def about():
