@@ -25,7 +25,7 @@ def get_tweet_sentiment(tweet: str) -> int:
     sentence_compound_scores: List[int] = []
     for sent in tweet_sentences:
         scores = sid.polarity_scores(sent)
-        sentence_compound_scores.append(scores['compound'])
+        sentence_compound_scores.append(scores['neg'])
     total_tweet_score = mean(sentence_compound_scores)
     return total_tweet_score
 # {'neg': 0.0, 'neu': 0.834, 'pos': 0.166, 'compound': 0.2944}

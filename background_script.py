@@ -1,5 +1,6 @@
 import re
 import sqlite3
+from collections import Counter
 from typing import List, Dict, Tuple
 import trending
 import name_check
@@ -41,13 +42,24 @@ def get_tweets() -> List[Tuple[str, float, List[str]]]:
             tweet_sentiment = sentiment.get_tweet_sentiment(content)
             content = process_tweet.clean_unicode_links(content)
             handles = process_tweet.get_handles(content)
-            print('Person:', person,
-                  'Sentiment:', tweet_sentiment,
-                  'Handles:', handles,
-                  'Tweet:', content.replace('\n', ''))
+            # print('Person:', person,
+            #       'Sentiment:', tweet_sentiment,
+            #       'Handles:', handles,
+            #       'Tweet:', content.replace('\n', ''))
             one_row: Tuple[str, float, List[str]] = (person, tweet_sentiment, handles)
             all_tweets_info.append(one_row)
     return all_tweets_info
+
+def setup():
+    conn = sqlite3.connect(db_file)
+
+    try:
+        cur = conn.cursor()
+
+        cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
+    finally:
+        cur.close()
+        conn.close()
 
 
 def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
@@ -57,7 +69,7 @@ def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
     try:
         cur = conn.cursor()
         
-        cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
+        # cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
 
         for trendTweet in all_tweets:
             # tweet is the form [("name", sas, ["@tags"]), ("name", sas, ["@tags"]), "name", sas, ["@tags"]]
@@ -96,6 +108,7 @@ def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
             print(counter.most_common(1))
             sublist.append(res1[i][2]/res1[i][1])
             rankTable.append(sublist)
+        rankTable = sorted(rankTable, key=lambda x: x[2], reverse=True)
     
     finally:
         cur.close()
