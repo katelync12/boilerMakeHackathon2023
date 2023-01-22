@@ -95,7 +95,7 @@ table, th, td {
 
 .subHeading {
   text-decoration: inherit;
-  font-size: 1.2em;
+  font-size: 1.6em;
 }
 
 .subHeading:visited {
@@ -109,4 +109,8 @@ table, th, td {
 
 #active-page {
   background-color:#19106c;
+}
+
+.mb-3 {
+  font-size: 3.8em;
 }
