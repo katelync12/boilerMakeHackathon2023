@@ -94,15 +94,16 @@ def user(name=''):
 
     username = "taylorswift13"
 
-    if "@" in tweets[0]['text']:
-        tweetList = tweets[0]['text'].split()
-        for word in tweetList:
-            if word.startswith("@"):
-                username = word
-                username = username.replace("@", "")
-                username = username.replace(":", "")
-                username = username.replace("-", "")
-                break
+    for word in retrieveList:
+        if "@" in word[1]:
+            tweetList = word[1].split()
+            for word in tweetList:
+                if word.startswith("@"):
+                    username = word
+                    username = username.replace("@", "")
+                    username = username.replace(":", "")
+                    username = username.replace("-", "")
+                    break
 
     image_url = get_users_with_bearer_token.create_url(username)
     get_image = get_users_with_bearer_token.connect_to_endpoint(image_url)
