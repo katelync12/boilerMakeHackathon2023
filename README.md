@@ -1,4 +1,4 @@
-# Top Cancelled
+# Cancel Me
 
 ## General Info
 This website features three main pages: Home, Random, and About Us.
