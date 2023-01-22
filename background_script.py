@@ -52,37 +52,54 @@ def get_tweets() -> List[Tuple[str, float, List[str]]]:
 
 def anushkas_code(all_tweets: List[Tuple[str, float, List[str]]]) -> None:
     """Write all_tweets to the db"""
+    conn = sqlite3.connect(db_file)
+
     try:
-        conn = sqlite3.connect(db_file)
-    except:
-        print(e)
-
-    cur = conn.cursor()
-    
-    cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
-
-    for trendTweet in all_tweets:
-        # tweet is the form [("name", sas, ["@tags"]), ("name", sas, ["@tags"]), "name", sas, ["@tags"]]
-        res = cur.execute("""
-            SELECT name FROM trending WHERE name==?
-            """, [trendTweet[0]])
-    
-    # print(trendTweet)
-        res1 = res.fetchall()
-    # print(res1)
-        if len(res1)==0:
-            cur.execute("""INSERT INTO trending VALUES
-                (?, 1, ?, ?);
-            """, [trendTweet[0], trendTweet[1], str("".join(trendTweet[2]))])
-        else:
-            cur.execute("""UPDATE trending
-            SET count = count + 1, sas = sas + ?, handles = (handles || ?)
-            WHERE name==?;
-            """, [trendTweet[1], str("".join(trendTweet[2])), trendTweet[0]])
-        conn.commit()
+        cur = conn.cursor()
         
-    cur.close()
-    conn.close()
+        cur.execute("CREATE TABLE trending(name, count REAL, sas REAL, handles)")
+
+        for trendTweet in all_tweets:
+            # tweet is the form [("name", sas, ["@tags"]), ("name", sas, ["@tags"]), "name", sas, ["@tags"]]
+            res = cur.execute("""
+                SELECT name FROM trending WHERE name==?
+                """, [trendTweet[0]])
+        
+            # print(trendTweet)
+            res1 = res.fetchall()
+            # print(res1)
+            if len(res1)==0:
+                cur.execute("""INSERT INTO trending VALUES
+                    (?, 1, ?, ?);
+                """, [trendTweet[0], trendTweet[1], str("".join(trendTweet[2]))])
+            else:
+                cur.execute("""UPDATE trending
+                SET count = count + 1, sas = sas + ?, handles = (handles || ?)
+                WHERE name==?;
+                """, [trendTweet[1], str("".join(trendTweet[2])), trendTweet[0]])
+            conn.commit()
+        
+        res = cur.execute("""
+                SELECT name, count, sas, handles FROM trending
+                """)
+        res1 = res.fetchall()
+
+        rankTable = []
+        for i in range(len(res1)):
+            print("res1: ", res1[i])  
+            sublist = list()
+            sublist.append(res1[i][0]) #name
+            ats = filter(None, res1[i][3].split('@'))
+            counter = Counter(ats) #hash map for hashtags
+            print("counter", counter)
+            sublist.append('@'+counter.most_common(1)[0][0]) #most common hashtag
+            print(counter.most_common(1))
+            sublist.append(res1[i][2]/res1[i][1])
+            rankTable.append(sublist)
+    
+    finally:
+        cur.close()
+        conn.close()
 
 if __name__ == "__main__":
     tweet_list = get_tweets()

@@ -151,7 +151,7 @@ def random():
     # image = json.dumps(get_image, indent=4, sort_keys=True)
     image = get_image['data'][0]['profile_image_url']
 
-    return render_template("random.html", content=retrieveList, image=image, username=username)#data)
+    return render_template("random.html", content=retrieveList, image=image, username=username)
 
 
 
