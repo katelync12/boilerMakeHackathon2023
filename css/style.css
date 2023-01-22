@@ -96,3 +96,17 @@ table, th, td {
   margin-right: auto;
   width: 50%;
 }
+
+.subHeading {
+  text-decoration: inherit;
+  font-size: 1.2em;
+}
+
+.subHeading:visited {
+  color: inherit;
+  text-decoration: none;
+ }
+
+.subHeading:hover {
+  color: rgb(217, 208, 255);
+}
