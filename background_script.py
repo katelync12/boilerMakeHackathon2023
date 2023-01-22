@@ -15,7 +15,7 @@ db_file = 'tweets.db'
 def get_tweets() -> List[Tuple[str, float, List[str]]]:
     """Return list of tuples containing tweet info"""
     # 1) Webdriver scrape twitter
-    source: str = trending.get_source_with_webdriver()
+    source: str = trending.get_source_with_webdriver(headless=True)
     topics: List[str] = trending.get_trending(source)
 
     # 1.5) Find the trending *names*
